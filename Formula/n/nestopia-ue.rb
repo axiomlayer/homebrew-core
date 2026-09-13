@@ -1,8 +1,8 @@
 class NestopiaUe < Formula
   desc "NES emulator"
   homepage "http://0ldsk00l.ca/nestopia/"
-  url "https://github.com/0ldsk00l/nestopia/archive/refs/tags/1.53.2.tar.gz"
-  sha256 "7783d2673ad496109e7dd3d75756cfef30c5b400409131b83b45c2fa3ddd735b"
+  url "https://github.com/0ldsk00l/nestopia/archive/refs/tags/2.0.0.tar.gz"
+  sha256 "2985786cd65740c6394fa626ef87a5e4d1566f9088436d13eb67f37845e5b019"
   license "GPL-2.0-or-later"
   head "https://github.com/0ldsk00l/nestopia.git", branch: "master"
 
