@@ -32,17 +32,20 @@ class SqlLanguageServer < Formula
     bin.install_symlink libexec.glob("bin/*")
 
     # Remove vendored pre-built binary `terminal-notifier`
-    node_notifier_vendor_dir = libexec/"lib/node_modules/sql-language-server/node_modules/node-notifier/vendor"
+    node_modules = libexec/"lib/node_modules/sql-language-server/node_modules"
+    node_notifier_vendor_dir = node_modules/"node-notifier/vendor"
     rm_r(node_notifier_vendor_dir) # remove vendored pre-built binaries
 
-    if OS.mac?
-      terminal_notifier_dir = node_notifier_vendor_dir/"mac.noindex"
-      terminal_notifier_dir.mkpath
+    return unless OS.mac?
 
-      # replace vendored `terminal-notifier` with our own
-      terminal_notifier_app = formula_opt_prefix("terminal-notifier")/"terminal-notifier.app"
-      ln_sf terminal_notifier_app.relative_path_from(terminal_notifier_dir), terminal_notifier_dir
-    end
+    terminal_notifier_dir = node_notifier_vendor_dir/"mac.noindex"
+    terminal_notifier_dir.mkpath
+
+    # replace vendored `terminal-notifier` with our own
+    terminal_notifier_app = formula_opt_prefix("terminal-notifier")/"terminal-notifier.app"
+    ln_sf terminal_notifier_app.relative_path_from(terminal_notifier_dir), terminal_notifier_dir
+
+    deuniversalize_machos node_modules/"fsevents/fsevents.node"
   end
 
   test do
