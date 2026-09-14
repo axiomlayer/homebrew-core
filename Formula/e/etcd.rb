@@ -19,6 +19,13 @@ class Etcd < Formula
 
   depends_on "go" => :build
 
+  # `test do` block runs a local etcd server
+  deny_network_access! [:build, :postinstall]
+
+  def fetch
+    system "go", "mod", "download"
+  end
+
   def install
     system "make", "build"
     bin.install Dir[buildpath/"bin/*"]
