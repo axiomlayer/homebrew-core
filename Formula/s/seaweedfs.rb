@@ -2,8 +2,8 @@ class Seaweedfs < Formula
   desc "Fast distributed storage system"
   homepage "https://seaweedfs.com"
   url "https://github.com/seaweedfs/seaweedfs.git",
-      tag:      "4.46",
-      revision: "d997fba1575583a89cf0cc50dc0150642286c86d"
+      tag:      "4.47",
+      revision: "c5073360007d28385a33426a42ac3e4ec504c5a3"
   license "Apache-2.0"
   head "https://github.com/seaweedfs/seaweedfs.git", branch: "master"
 
@@ -37,6 +37,9 @@ class Seaweedfs < Formula
   end
 
   test do
+    # Write .sock file to testpath as we do not have permission to write to /tmp
+    ENV["TMPDIR"] = testpath
+
     # Start SeaweedFS master server/volume server
     master_port = free_port
     volume_port = free_port
