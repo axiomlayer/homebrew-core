@@ -22,8 +22,6 @@ class Mcphost < Formula
 
   def install
     system "go", "build", *std_go_args(ldflags: "-X main.version=#{version}")
-
-    generate_completions_from_executable(bin/"mcphost", shell_parameter_format: :cobra)
   end
 
   test do
