@@ -32,6 +32,17 @@ class Grafana < Formula
     depends_on "zlib-ng-compat"
   end
 
+  # `test do` block runs a local server
+  deny_network_access! [:build, :postinstall]
+
+  def fetch
+    ENV["NODE_OPTIONS"] = "--max-old-space-size=8000"
+    ENV["npm_config_build_from_source"] = "true"
+
+    system "go", "mod", "download"
+    system "yarn", "install", "--immutable"
+  end
+
   def install
     ENV["COMMIT_SHA"] = tap.user
     ENV["BUILD_NUMBER"] = revision.to_s
@@ -41,7 +52,6 @@ class Grafana < Formula
     system "make", "gen-go"
     system "make", "build-backend"
 
-    system "yarn", "install", "--immutable"
     system "yarn", "build"
 
     os = OS.kernel_name.downcase
