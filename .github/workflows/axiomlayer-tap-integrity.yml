@@ -1,0 +1,254 @@
+name: AxiomLayer tap integrity
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "17 11 * * *"
+  workflow_dispatch:
+
+# This public-source workflow does not consume its automatically issued token.
+permissions: {}
+
+env:
+  AXIOMLAYER_INPUT_CLASS: fabricated-public-metadata
+
+concurrency:
+  group: axiomlayer-tap-integrity-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  pinned-policy:
+    name: Pinned policy and private-consumer attestations
+    if: github.server_url == 'https://github.com' && github.repository == 'axiomlayer/homebrew-core' && github.event.repository.full_name == 'axiomlayer/homebrew-core' && github.event.repository.default_branch == 'main' && ((github.event_name == 'pull_request' && github.base_ref == 'main' && github.event.pull_request.head.repo.full_name == 'axiomlayer/homebrew-core' && github.ref == format('refs/pull/{0}/merge', github.event.pull_request.number) && github.workflow_ref == format('axiomlayer/homebrew-core/.github/workflows/axiomlayer-tap-integrity.yml@refs/pull/{0}/merge', github.event.pull_request.number)) || ((github.event_name == 'push' || github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main' && github.ref_protected == true && github.workflow_ref == 'axiomlayer/homebrew-core/.github/workflows/axiomlayer-tap-integrity.yml@refs/heads/main'))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - name: Refuse non-hosted or non-fabricated execution
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$RUNNER_ENVIRONMENT" = github-hosted
+          test "$GITHUB_SERVER_URL" = https://github.com
+          test "$GITHUB_REPOSITORY" = axiomlayer/homebrew-core
+          test "$AXIOMLAYER_INPUT_CLASS" = fabricated-public-metadata
+
+      - name: Fetch the exact public revision anonymously
+        shell: bash
+        run: |
+          set -euo pipefail
+          anonymous_home="$RUNNER_TEMP/axiomlayer-anonymous-git-home"
+          test ! -e "$anonymous_home"
+          mkdir -m 700 "$anonymous_home"
+          export HOME="$anonymous_home"
+          export GIT_CONFIG_NOSYSTEM=1
+          export GIT_CONFIG_GLOBAL=/dev/null
+          export GIT_TERMINAL_PROMPT=0
+          unset GIT_ASKPASS SSH_ASKPASS
+          target_sha="$GITHUB_SHA"
+          target_ref="$GITHUB_REF"
+          [[ "$target_sha" =~ ^[0-9a-f]{40}$ ]] || {
+            printf 'invalid workflow revision: %s\n' "$target_sha" >&2
+            exit 1
+          }
+          [[ "$target_ref" == refs/* ]] || {
+            printf 'invalid workflow ref: %s\n' "$target_ref" >&2
+            exit 1
+          }
+          source_dir="$GITHUB_WORKSPACE/source"
+          test ! -e "$source_dir"
+          git init "$source_dir"
+          git -C "$source_dir" remote add origin https://github.com/axiomlayer/homebrew-core.git
+          git -C "$source_dir" -c credential.helper= -c http.extraheader= fetch \
+            --no-tags --filter=blob:none origin "$target_ref"
+          test "$(git -C "$source_dir" rev-parse FETCH_HEAD)" = "$target_sha"
+          git -C "$source_dir" -c advice.detachedHead=false checkout --detach "$target_sha"
+          git -C "$source_dir" remote add upstream https://github.com/Homebrew/homebrew-core.git
+          git -C "$source_dir" remote set-url --push upstream DISABLED
+          test "$(git -C "$source_dir" rev-parse HEAD)" = "$target_sha"
+          test -z "$(git -C "$source_dir" status --porcelain=v1 --untracked-files=all)"
+          test -z "$(git -C "$source_dir" config --local --get-all credential.helper || true)"
+          test -z "$(git -C "$source_dir" config --local --get-regexp '^http\..*\.extraheader$' || true)"
+
+      - name: Prove fail-closed behavior
+        shell: bash
+        run: python3 -m unittest discover -s source/axiomlayer/tests -v
+
+      - name: Verify exact pin, fork, workflows, formulae, and casks
+        shell: bash
+        run: >-
+          python3 source/axiomlayer/verify_tap_integrity.py
+          --policy source/axiomlayer/tap-integrity-policy.json
+          baseline
+          --repo source
+
+  current-upstream-canary:
+    name: Current upstream / ${{ matrix.surface }}
+    needs: pinned-policy
+    if: github.server_url == 'https://github.com' && github.repository == 'axiomlayer/homebrew-core' && github.event.repository.full_name == 'axiomlayer/homebrew-core' && github.event.repository.default_branch == 'main' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main' && github.ref_protected == true && github.workflow_ref == 'axiomlayer/homebrew-core/.github/workflows/axiomlayer-tap-integrity.yml@refs/heads/main'
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - surface: linux-x86_64
+            runner: ubuntu-24.04
+            expected_system: Linux
+            expected_machine: x86_64
+          - surface: linux-aarch64
+            runner: ubuntu-24.04-arm
+            expected_system: Linux
+            expected_machine: aarch64
+          - surface: darwin-x86_64
+            runner: macos-15-intel
+            expected_system: Darwin
+            expected_machine: x86_64
+          - surface: darwin-arm64
+            runner: macos-15
+            expected_system: Darwin
+            expected_machine: arm64
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 20
+    steps:
+      - name: Refuse non-hosted or non-fabricated execution
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$RUNNER_ENVIRONMENT" = github-hosted
+          test "$GITHUB_SERVER_URL" = https://github.com
+          test "$GITHUB_REPOSITORY" = axiomlayer/homebrew-core
+          test "$AXIOMLAYER_INPUT_CLASS" = fabricated-public-metadata
+
+      - name: Fetch the policy revision anonymously
+        shell: bash
+        run: |
+          set -euo pipefail
+          anonymous_home="$RUNNER_TEMP/axiomlayer-anonymous-git-home"
+          test ! -e "$anonymous_home"
+          mkdir -m 700 "$anonymous_home"
+          export HOME="$anonymous_home"
+          export GIT_CONFIG_NOSYSTEM=1
+          export GIT_CONFIG_GLOBAL=/dev/null
+          export GIT_TERMINAL_PROMPT=0
+          unset GIT_ASKPASS SSH_ASKPASS
+          target_sha="$GITHUB_SHA"
+          target_ref="$GITHUB_REF"
+          [[ "$target_sha" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$target_ref" == refs/* ]]
+          policy_dir="$GITHUB_WORKSPACE/policy-source"
+          test ! -e "$policy_dir"
+          git init "$policy_dir"
+          git -C "$policy_dir" remote add origin https://github.com/axiomlayer/homebrew-core.git
+          git -C "$policy_dir" -c credential.helper= -c http.extraheader= fetch \
+            --no-tags --filter=blob:none origin "$target_ref"
+          test "$(git -C "$policy_dir" rev-parse FETCH_HEAD)" = "$target_sha"
+          git -C "$policy_dir" -c advice.detachedHead=false checkout --detach "$target_sha"
+          git -C "$policy_dir" remote add upstream https://github.com/Homebrew/homebrew-core.git
+          git -C "$policy_dir" remote set-url --push upstream DISABLED
+          test "$(git -C "$policy_dir" rev-parse HEAD)" = "$target_sha"
+          test -z "$(git -C "$policy_dir" status --porcelain=v1 --untracked-files=all)"
+          test -z "$(git -C "$policy_dir" config --local --get-all credential.helper || true)"
+          test -z "$(git -C "$policy_dir" config --local --get-regexp '^http\..*\.extraheader$' || true)"
+
+      - name: Resolve and fetch current upstream without promotion
+        shell: bash
+        run: |
+          set -euo pipefail
+          anonymous_home="$RUNNER_TEMP/axiomlayer-upstream-git-home"
+          test ! -e "$anonymous_home"
+          mkdir -m 700 "$anonymous_home"
+          export HOME="$anonymous_home"
+          export GIT_CONFIG_NOSYSTEM=1
+          export GIT_CONFIG_GLOBAL=/dev/null
+          export GIT_TERMINAL_PROMPT=0
+          unset GIT_ASKPASS SSH_ASKPASS
+          upstream_url=https://github.com/Homebrew/homebrew-core.git
+          upstream_ref=refs/heads/main
+          upstream_line=$(git ls-remote --exit-code "$upstream_url" "$upstream_ref")
+          upstream_sha=${upstream_line%%[[:space:]]*}
+          [[ "$upstream_sha" =~ ^[0-9a-f]{40}$ ]] || {
+            printf 'invalid upstream revision: %s\n' "$upstream_sha" >&2
+            exit 1
+          }
+          canary_dir="${RUNNER_TEMP}/homebrew-core-canary"
+          test ! -e "$canary_dir"
+          git init "$canary_dir"
+          git -C "$canary_dir" remote add upstream "$upstream_url"
+          git -C "$canary_dir" remote set-url --push upstream DISABLED
+          git -C "$canary_dir" -c credential.helper= -c http.extraheader= fetch \
+            --no-tags --depth=1 --filter=blob:none upstream "$upstream_sha"
+          test "$(git -C "$canary_dir" rev-parse FETCH_HEAD)" = "$upstream_sha"
+          git -C "$canary_dir" -c advice.detachedHead=false checkout --detach "$upstream_sha"
+          test "$(git -C "$canary_dir" rev-parse HEAD)" = "$upstream_sha"
+          test -z "$(git -C "$canary_dir" status --porcelain=v1 --untracked-files=all)"
+          test -z "$(git -C "$canary_dir" config --local --get-all credential.helper || true)"
+          test -z "$(git -C "$canary_dir" config --local --get-regexp '^http\..*\.extraheader$' || true)"
+          python3 "$GITHUB_WORKSPACE/policy-source/axiomlayer/verify_tap_integrity.py" \
+            --policy "$GITHUB_WORKSPACE/policy-source/axiomlayer/tap-integrity-policy.json" \
+            canary \
+            --repo "$canary_dir" \
+            --commit "$upstream_sha" \
+            --surface "${{ matrix.surface }}" \
+            --expected-system "${{ matrix.expected_system }}" \
+            --expected-machine "${{ matrix.expected_machine }}"
+
+  workflow-required:
+    name: Required tap integrity authority
+    needs:
+      - pinned-policy
+      - current-upstream-canary
+    if: ${{ always() }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      PINNED_POLICY_RESULT: ${{ needs.pinned-policy.result }}
+      CANARY_RESULT: ${{ needs.current-upstream-canary.result }}
+      EVENT_REPOSITORY: ${{ github.event.repository.full_name }}
+      EVENT_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+      PR_HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      REF_PROTECTED: ${{ github.ref_protected }}
+      WORKFLOW_REF: ${{ github.workflow_ref }}
+    steps:
+      - name: Refuse skipped, invalid, or incomplete verification
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$RUNNER_ENVIRONMENT" = github-hosted
+          test "$GITHUB_SERVER_URL" = https://github.com
+          test "$GITHUB_REPOSITORY" = axiomlayer/homebrew-core
+          test "$EVENT_REPOSITORY" = axiomlayer/homebrew-core
+          test "$EVENT_DEFAULT_BRANCH" = main
+          test "$AXIOMLAYER_INPUT_CLASS" = fabricated-public-metadata
+          test "$PINNED_POLICY_RESULT" = success
+
+          main_workflow_ref=axiomlayer/homebrew-core/.github/workflows/axiomlayer-tap-integrity.yml@refs/heads/main
+          case "$GITHUB_EVENT_NAME" in
+            pull_request)
+              test "$CANARY_RESULT" = skipped
+              test "$GITHUB_BASE_REF" = main
+              test "$PR_HEAD_REPOSITORY" = axiomlayer/homebrew-core
+              [[ "$PR_NUMBER" =~ ^[1-9][0-9]*$ ]]
+              test "$GITHUB_REF" = "refs/pull/$PR_NUMBER/merge"
+              test "$WORKFLOW_REF" = "axiomlayer/homebrew-core/.github/workflows/axiomlayer-tap-integrity.yml@refs/pull/$PR_NUMBER/merge"
+              ;;
+            push)
+              test "$CANARY_RESULT" = skipped
+              test "$GITHUB_REF" = refs/heads/main
+              test "$REF_PROTECTED" = true
+              test "$WORKFLOW_REF" = "$main_workflow_ref"
+              ;;
+            schedule|workflow_dispatch)
+              test "$CANARY_RESULT" = success
+              test "$GITHUB_REF" = refs/heads/main
+              test "$REF_PROTECTED" = true
+              test "$WORKFLOW_REF" = "$main_workflow_ref"
+              ;;
+            *)
+              printf 'unsupported event: %s\n' "$GITHUB_EVENT_NAME" >&2
+              exit 1
+              ;;
+          esac

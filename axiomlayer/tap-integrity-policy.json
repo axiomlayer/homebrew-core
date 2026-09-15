@@ -1,0 +1,468 @@
+{
+  "schema": "axiomlayer-homebrew-tap-integrity-v1",
+  "fork": {
+    "repository": "axiomlayer/homebrew-core",
+    "upstream": "Homebrew/homebrew-core",
+    "defaultBranch": "main",
+    "originRemoteName": "origin",
+    "originUrl": "https://github.com/axiomlayer/homebrew-core.git",
+    "upstreamRemoteName": "upstream",
+    "upstreamFetchUrl": "https://github.com/Homebrew/homebrew-core.git",
+    "upstreamPushUrl": "DISABLED",
+    "pinnedCommit": "3624cbcd6aef759de1531bd8f5ffd6905045cadc",
+    "pinnedTree": "9061a8d39fc70ba5f68f2604081325e2d021d2b9",
+    "preservedUpstreamSnapshot": {
+      "branch": "upstream-snapshot-20260915",
+      "commit": "9978357b28f5dbca21f45322d9ab3b1e1d7a505f",
+      "tree": "346f5e8f0e44de8c5cd02b8a27091ddc6d7849e3"
+    }
+  },
+  "repositorySettings": {
+    "actionsEnabled": true,
+    "allowedActions": "selected",
+    "githubOwnedActionsAllowed": true,
+    "verifiedActionsAllowed": false,
+    "allowedActionPatterns": [],
+    "shaPinningRequired": true,
+    "repositorySecrets": 0,
+    "environments": 0
+  },
+  "consumerSnapshots": {
+    "dotfiles": {
+      "repository": "axiomlayer/dotfiles",
+      "pullRequest": 49,
+      "commit": "28df122c5685be02605eb5f2880fc155cd4b21cd",
+      "tree": "11ab54f8b79b6d9ba378be34e746c7051ced47b7",
+      "privateSource": true,
+      "files": {
+        "home/Brewfile": {
+          "blob": "d9633335e595dca35b0a944314aad85aa65d5b13",
+          "sha256": "141ad351a58e4f97f1f69b89d41baf53d842933ff47d773b372a7120ac3d8cbb"
+        },
+        "bin/bootstrap-box.sh": {
+          "blob": "43af858fe2981eb91b0c7d350e62e4298601cf4f",
+          "sha256": "78b5d9f50e72bd5208043c19d52199ec9576c37a9c249196bdf958910dda0e68"
+        },
+        "config/fleet-capabilities.tsv": {
+          "blob": "b572c8b582b9442b62893a22534eae11cc969889",
+          "sha256": "d2252daf1439de39494c2b2e5dd27fe3fb01a3dd5472853f3dcf086d4db7636a"
+        }
+      },
+      "brewfileFormulaRoots": [
+        "bash",
+        "bash-completion@2",
+        "btop",
+        "git",
+        "gh",
+        "hugo",
+        "jq",
+        "llama.cpp",
+        "nano",
+        "pandoc",
+        "python",
+        "ripgrep",
+        "starship",
+        "tmux"
+      ],
+      "bootstrapFormulaRoots": [
+        "bash",
+        "gawk",
+        "gh",
+        "git",
+        "go",
+        "jq",
+        "nano",
+        "python",
+        "ripgrep",
+        "socat",
+        "sqlite",
+        "tailscale",
+        "tmux"
+      ],
+      "bootstrapCaskAliases": {
+        "docker": "docker-desktop"
+      },
+      "bootstrapSelectionWitnesses": {
+        "bash": "macos:bash|macos:git|macos:gh|macos:jq|macos:gawk|macos:nano|macos:tmux|macos:socat)",
+        "gawk": "macos:bash|macos:git|macos:gh|macos:jq|macos:gawk|macos:nano|macos:tmux|macos:socat)",
+        "gh": "macos:bash|macos:git|macos:gh|macos:jq|macos:gawk|macos:nano|macos:tmux|macos:socat)",
+        "git": "macos:bash|macos:git|macos:gh|macos:jq|macos:gawk|macos:nano|macos:tmux|macos:socat)",
+        "go": "macos:go) printf '%s\\n' 'package go go' ;;",
+        "jq": "macos:bash|macos:git|macos:gh|macos:jq|macos:gawk|macos:nano|macos:tmux|macos:socat)",
+        "nano": "macos:bash|macos:git|macos:gh|macos:jq|macos:gawk|macos:nano|macos:tmux|macos:socat)",
+        "python": "macos) want python3 python ;;",
+        "ripgrep": "macos:rg) printf '%s\\n' 'package rg ripgrep' ;;",
+        "socat": "macos:bash|macos:git|macos:gh|macos:jq|macos:gawk|macos:nano|macos:tmux|macos:socat)",
+        "sqlite": "run brew install sqlite",
+        "tailscale": "run brew install tailscale",
+        "tmux": "macos:bash|macos:git|macos:gh|macos:jq|macos:gawk|macos:nano|macos:tmux|macos:socat)",
+        "docker": "run brew install --cask docker"
+      }
+    },
+    "margay": {
+      "repository": "axiomlayer/margay",
+      "pullRequest": 8,
+      "commit": "82c28ef289e3c66ac7a0c2fac354861f23777dc6",
+      "tree": "d8f5b3315a199bfa559d1a403f8f04bfacbbe497",
+      "privateSource": true,
+      "files": {
+        "flake.nix": {
+          "blob": "0219462375ef4f8a89bc35bb31ce0b6ff9ca9b8d",
+          "sha256": "7b7d721f22364ae4af5a01f652e6a6cd8dc618b1e2a25e445d0ed6096bd8a18b"
+        },
+        "config/device.json": {
+          "blob": "3521a41ae6a601f429788918954bde0448690ba9",
+          "sha256": "3993744f5750823bd05e54551a0f0dc045030143014fd060a451fd25a874c32c"
+        }
+      },
+      "homebrewCoreCommit": "3624cbcd6aef759de1531bd8f5ffd6905045cadc",
+      "homebrewCaskCommit": "04ca55c1335a5f8427cc08610a863c9b2e7f4e27",
+      "activeCasks": [
+        "claude",
+        "docker-desktop"
+      ],
+      "deferredCasks": [
+        "google-drive",
+        "logi-options+"
+      ]
+    }
+  },
+  "formulaAudit": {
+    "roots": [
+      "bash",
+      "bash-completion@2",
+      "btop",
+      "gawk",
+      "gh",
+      "git",
+      "go",
+      "hugo",
+      "jq",
+      "llama.cpp",
+      "nano",
+      "pandoc",
+      "python",
+      "ripgrep",
+      "socat",
+      "sqlite",
+      "starship",
+      "tailscale",
+      "tmux"
+    ],
+    "dependencyPolicy": "recursive union of depends_on and uses_from_macos declarations",
+    "systemDependencyPolicy": "uses_from_macos names absent from the tap are recorded as platform providers",
+    "artifactPolicy": "inspect formula declarations only; never download source archives or bottles",
+    "rejectNoCheck": true,
+    "requireDeclaredSourceIntegrity": true,
+    "normalizedSources": [
+      {
+        "path": "Formula/b/bash.rb",
+        "upstreamBlob": "4870dc8ab996ba0b9a5ab257c02dbd078ca27093",
+        "normalizedBlob": "8652f56a5c9a747563c234181879a65a5a00f6f4",
+        "sha256": "1e05a043e4f0c1e2c0c1ef190a1eb79eeebfbe8a5307456087c679127998ae4a"
+      },
+      {
+        "path": "Formula/g/go.rb",
+        "upstreamBlob": "74f880d99ed8181719df36f1e221914aa8f35674",
+        "normalizedBlob": "181e39e5f7c6e65f52a6aadcb53a459010a434a5",
+        "sha256": "3e05418b5c0de716923776c9ec763ef55344827983e99d85f98bf2a48b2ecb1b"
+      },
+      {
+        "path": "Formula/r/readline.rb",
+        "upstreamBlob": "0c1736e628e599c9c0434f8e8d2ecbb8f5b960c5",
+        "normalizedBlob": "238cea051dfb68c883807717d94144442608dbc1",
+        "sha256": "4185e253dfecec87d9970d569ea0a721cecf01724362e9e42d9d791561b36753"
+      }
+    ]
+  },
+  "caskAudit": {
+    "repository": "Homebrew/homebrew-cask",
+    "commit": "04ca55c1335a5f8427cc08610a863c9b2e7f4e27",
+    "tree": "156494091d1a79f67c1bb24cb0be21e80dd08178",
+    "artifactPolicy": "fetch cask definition bytes only; never follow app URLs or mirror artifacts",
+    "definitions": [
+      {
+        "name": "claude",
+        "path": "Casks/c/claude.rb",
+        "blob": "4897c68bed23fe799ce473c7295216891dd6cefd",
+        "sha256": "0b22acf6bacba2b8f9110c980d5fc5c77078103b5dafb7bdc59f30f93ff5a95b",
+        "disposition": "active",
+        "minimumDeclaredSha256": 1,
+        "allowNoCheck": false
+      },
+      {
+        "name": "docker-desktop",
+        "path": "Casks/d/docker-desktop.rb",
+        "blob": "44959622ebcffc3e4dffd75f1df02cdd0f616066",
+        "sha256": "b7d0755d5104f210ffaf870e2b5707c9af837eed68ec3ecb49340d26afcb6100",
+        "disposition": "active",
+        "minimumDeclaredSha256": 2,
+        "allowNoCheck": false
+      },
+      {
+        "name": "google-drive",
+        "path": "Casks/g/google-drive.rb",
+        "blob": "3bb89affb3abc936f798be564dde9b3fde457639",
+        "sha256": "20f64dcfa48e79fd865b3bfc2d354d859d989e42d5664fbb947ee513dca882fa",
+        "disposition": "deferred",
+        "minimumDeclaredSha256": 0,
+        "allowNoCheck": true
+      },
+      {
+        "name": "logi-options+",
+        "path": "Casks/l/logi-options+.rb",
+        "blob": "f62f50da4356353989d212da9d4cbfd44dcc8a26",
+        "sha256": "d5e6cc6ca8715dc063f14312ca893448db73b2a78610880d27a68f9a52fb5b51",
+        "disposition": "deferred",
+        "minimumDeclaredSha256": 2,
+        "allowNoCheck": true
+      }
+    ]
+  },
+  "workflowPolicy": {
+    "active": [
+      ".github/workflows/axiomlayer-tap-integrity.yml"
+    ],
+    "requiredStatusCheck": "Required tap integrity authority",
+    "rulesetBootstrap": {
+      "phaseOne": {
+        "targetBranch": "main",
+        "noBypassActors": true,
+        "blockDeletion": true,
+        "blockNonFastForward": true,
+        "requirePullRequest": true,
+        "requiredApprovingReviews": 1,
+        "requiredStatusChecks": []
+      },
+      "phaseTwo": {
+        "targetBranch": "main",
+        "noBypassActors": true,
+        "blockDeletion": true,
+        "blockNonFastForward": true,
+        "requirePullRequest": true,
+        "requiredApprovingReviews": 1,
+        "dismissStaleApprovals": true,
+        "requireConversationResolution": true,
+        "strictStatusChecks": true,
+        "requiredStatusChecks": [
+          "Required tap integrity authority"
+        ]
+      }
+    },
+    "verifierSha256": "097a371d35c32428ca2d5e8459004a57786d1ac9d1760d2a83c0061e2313c8ca",
+    "archiveManifest": {
+      "baselineCommit": "3624cbcd6aef759de1531bd8f5ffd6905045cadc",
+      "archiveRoot": ".github/upstream-workflows",
+      "activeSha256": "8e265bed2abfb77c738411ec43081600c63199c47e3630cbb9a04b34d5593f36",
+      "readme": {
+        "path": ".github/upstream-workflows/README.md",
+        "sha256": "dece187110550aa1526d37a92ac4eb26cfc1e2ebf32c92f00516d86bc5cbe61d"
+      },
+      "entries": [
+        {
+          "sourcePath": ".github/ISSUE_TEMPLATE.md",
+          "archivePath": ".github/upstream-workflows/ISSUE_TEMPLATE.md.disabled",
+          "sha256": "902263723214f574f9dbb9f6aad6edb98fe15ede6833162aa8801d2a58e53fb8"
+        },
+        {
+          "sourcePath": ".github/ISSUE_TEMPLATE/bug.yml",
+          "archivePath": ".github/upstream-workflows/ISSUE_TEMPLATE/bug.yml.disabled",
+          "sha256": "b4ae23dad8d9020baf7cd3a59bf2b09f367aab201f656a71092985c02ff45226"
+        },
+        {
+          "sourcePath": ".github/ISSUE_TEMPLATE/config.yml",
+          "archivePath": ".github/upstream-workflows/ISSUE_TEMPLATE/config.yml.disabled",
+          "sha256": "9c7de9c24fd56e59b89e5b1c6c60bc0828212a1ddb25819d0aed161ce3335f98"
+        },
+        {
+          "sourcePath": ".github/PULL_REQUEST_TEMPLATE.md",
+          "archivePath": ".github/upstream-workflows/PULL_REQUEST_TEMPLATE.md.disabled",
+          "sha256": "c2be37101edd934c75a30b05cf300f8113f5a0f9cab2c542ca34be2b42ebc364"
+        },
+        {
+          "sourcePath": ".github/actionlint.yaml",
+          "archivePath": ".github/upstream-workflows/actionlint.yaml.disabled",
+          "sha256": "a0ea488e12b46228897db09e6d0d9560bb35940fa3e3fda6500d08b6389bbcc3"
+        },
+        {
+          "sourcePath": ".github/codeql/extensions/homebrew-actions.yml",
+          "archivePath": ".github/upstream-workflows/codeql/extensions/homebrew-actions.yml.disabled",
+          "sha256": "3f884eb924b6326dde6c5352c5255b262175674141b5ce57a6cd954abca92a21"
+        },
+        {
+          "sourcePath": ".github/dependabot.yml",
+          "archivePath": ".github/upstream-workflows/dependabot.yml.disabled",
+          "sha256": "4dc416d92da17577b0aeb76102b81bccc33a8ccdbbce0e66761e9983368b15b1"
+        },
+        {
+          "sourcePath": ".github/workflows/actionlint.yml",
+          "archivePath": ".github/upstream-workflows/actionlint.yml.disabled",
+          "sha256": "3683ecb55cdf2debedc9fb5bafbbc754d2afd31b809889c7a7bf641bb674e25a"
+        },
+        {
+          "sourcePath": ".github/workflows/autobump.yml",
+          "archivePath": ".github/upstream-workflows/autobump.yml.disabled",
+          "sha256": "d16333a48149f20fe887e26d057e4ebd2b9636826793cd0514c1e20bdc01edc4"
+        },
+        {
+          "sourcePath": ".github/workflows/automerge-from-merge-queue.yml",
+          "archivePath": ".github/upstream-workflows/automerge-from-merge-queue.yml.disabled",
+          "sha256": "a0b7766025663652bb60d089659116938a04e38f875f3efe9770405442f036eb"
+        },
+        {
+          "sourcePath": ".github/workflows/automerge-triggers.yml",
+          "archivePath": ".github/upstream-workflows/automerge-triggers.yml.disabled",
+          "sha256": "f8b28024ac199ecdd46f12b7cd9e42c3872e79e8d3bbb61d45f7be259fe365a0"
+        },
+        {
+          "sourcePath": ".github/workflows/automerge.yml",
+          "archivePath": ".github/upstream-workflows/automerge.yml.disabled",
+          "sha256": "1b69a5b67c83b6e4b99bdd69e59bcf1e6cf9ed17aee43a5e1acbab10ce2d2b30"
+        },
+        {
+          "sourcePath": ".github/workflows/cache.yml",
+          "archivePath": ".github/upstream-workflows/cache.yml.disabled",
+          "sha256": "a99fb45fd37b8794591b371186efc5bc47447e739256a5c498b5576f2b3e0d7f"
+        },
+        {
+          "sourcePath": ".github/workflows/check-issues.yml",
+          "archivePath": ".github/upstream-workflows/check-issues.yml.disabled",
+          "sha256": "5757e668cb3f3229e1de6c696779921035fd30fa591114564f6c8284db5b9a25"
+        },
+        {
+          "sourcePath": ".github/workflows/check-prs.yml",
+          "archivePath": ".github/upstream-workflows/check-prs.yml.disabled",
+          "sha256": "b045b7bbf1153ac3b37b1b4c6ba86f2bce570a7b077c50d9465ac2232f3deacd"
+        },
+        {
+          "sourcePath": ".github/workflows/clean-up-closed-prs.yml",
+          "archivePath": ".github/upstream-workflows/clean-up-closed-prs.yml.disabled",
+          "sha256": "7d28df075e05ff539b77c0f1a51365404cc66d0bab38c18fe2ae1037b94e929e"
+        },
+        {
+          "sourcePath": ".github/workflows/create-replacement-pr.yml",
+          "archivePath": ".github/upstream-workflows/create-replacement-pr.yml.disabled",
+          "sha256": "f022ffcbef0a72b06ee30046e9c1c4b4a8c3017119d910604993e72c529df693"
+        },
+        {
+          "sourcePath": ".github/workflows/dispatch-build-bottle.yml",
+          "archivePath": ".github/upstream-workflows/dispatch-build-bottle.yml.disabled",
+          "sha256": "9581b5599f7813ab68c3ecd6b977e84a97cfa093eb87d03ff0095650106b1bc5"
+        },
+        {
+          "sourcePath": ".github/workflows/dispatch-rebottle.yml",
+          "archivePath": ".github/upstream-workflows/dispatch-rebottle.yml.disabled",
+          "sha256": "783f3726d58a7aa5b8d90cd6e76b2f4e3822cdffe0a6d1938ef0c82fe0ec67e6"
+        },
+        {
+          "sourcePath": ".github/workflows/manage-pull-request-labels.yml",
+          "archivePath": ".github/upstream-workflows/manage-pull-request-labels.yml.disabled",
+          "sha256": "cb04b5558b5e8d47624cf0763d74b5db6d20c64a447e8c53bfcc0af10a826cf9"
+        },
+        {
+          "sourcePath": ".github/workflows/prune-command-not-found-db.yml",
+          "archivePath": ".github/upstream-workflows/prune-command-not-found-db.yml.disabled",
+          "sha256": "c364e310fff31681ae2469671cfb3822bab910c4b3143533f41db383fcbad229"
+        },
+        {
+          "sourcePath": ".github/workflows/publish-commit-bottles.yml",
+          "archivePath": ".github/upstream-workflows/publish-commit-bottles.yml.disabled",
+          "sha256": "6697de35b6f392fbeb1bfc9f4863fe64d8bd54b8db6d68bd796d30110a1e65d8"
+        },
+        {
+          "sourcePath": ".github/workflows/remove-disabled-packages.yml",
+          "archivePath": ".github/upstream-workflows/remove-disabled-packages.yml.disabled",
+          "sha256": "e07d845148aef6cf89778bc89d979192725caa1992b701dba8c4059b561b87b7"
+        },
+        {
+          "sourcePath": ".github/workflows/remove-unused-patches.yml",
+          "archivePath": ".github/upstream-workflows/remove-unused-patches.yml.disabled",
+          "sha256": "50f54f4b400ba705ac5af3eda5bbd16f1951bf23e9410c8730a3997f427cc776"
+        },
+        {
+          "sourcePath": ".github/workflows/scheduled.yml",
+          "archivePath": ".github/upstream-workflows/scheduled.yml.disabled",
+          "sha256": "6c73feedf51f11ac228d655a15568230723e9b96f6b177fea19ccb12081259b7"
+        },
+        {
+          "sourcePath": ".github/workflows/scripts/check-labels.js",
+          "archivePath": ".github/upstream-workflows/scripts/check-labels.js.disabled",
+          "sha256": "d168b16caf44ce0b8a010b31815eeb7980736bb54dd98e7e16302ad2b982821f"
+        },
+        {
+          "sourcePath": ".github/workflows/stale-issues-and-prs.yml",
+          "archivePath": ".github/upstream-workflows/stale-issues-and-prs.yml.disabled",
+          "sha256": "58f14a0d22598e8f73791ecab465661c2c901c803121a306c2d26f273a336b04"
+        },
+        {
+          "sourcePath": ".github/workflows/tests.yml",
+          "archivePath": ".github/upstream-workflows/tests.yml.disabled",
+          "sha256": "ece684daffb4f8a9fa1a0f2443151cf53ed440fa823d5f849b30bb13325bb721"
+        },
+        {
+          "sourcePath": ".github/workflows/triage-ci.yml",
+          "archivePath": ".github/upstream-workflows/triage-ci.yml.disabled",
+          "sha256": "38c3eb0c915ee8453be8768882821546dfe360035d23ead725779087e9819a1a"
+        },
+        {
+          "sourcePath": ".github/workflows/triage.yml",
+          "archivePath": ".github/upstream-workflows/triage.yml.disabled",
+          "sha256": "f5a56df46115815ceef678160d6e07f70ef053992aa130a4eefe885956204f9a"
+        }
+      ]
+    },
+    "representativeFormulae": [
+      "go",
+      "jq",
+      "ripgrep",
+      "sqlite"
+    ],
+    "metadataEvaluation": {
+      "mode": "static-source-declarations",
+      "rubySourceExecution": false,
+      "homebrewRuntimeLoaded": false,
+      "homebrewStateMutationAllowed": false,
+      "formulaHooksInvoked": false,
+      "caskHooksInvoked": false
+    },
+    "sensitiveInputPolicy": "fabricated-only",
+    "allowedActions": {},
+    "tokenPermissions": "none",
+    "forbidCredentials": true,
+    "forbidEnvironments": true,
+    "forbidMutation": true,
+    "forbidHostInstallation": true,
+    "forbidArtifactTransfer": true
+  },
+  "canary": {
+    "upstream": "https://github.com/Homebrew/homebrew-core.git",
+    "ref": "refs/heads/main",
+    "automaticPromotion": false,
+    "surfaces": [
+      {
+        "id": "linux-x86_64",
+        "runner": "ubuntu-24.04",
+        "unameSystem": "Linux",
+        "unameMachine": "x86_64"
+      },
+      {
+        "id": "linux-aarch64",
+        "runner": "ubuntu-24.04-arm",
+        "unameSystem": "Linux",
+        "unameMachine": "aarch64"
+      },
+      {
+        "id": "darwin-x86_64",
+        "runner": "macos-15-intel",
+        "unameSystem": "Darwin",
+        "unameMachine": "x86_64"
+      },
+      {
+        "id": "darwin-arm64",
+        "runner": "macos-15",
+        "unameSystem": "Darwin",
+        "unameMachine": "arm64"
+      }
+    ]
+  }
+}
