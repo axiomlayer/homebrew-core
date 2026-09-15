@@ -36,33 +36,26 @@ class Go < Formula
 
   # Don't update this unless this version cannot bootstrap the new version.
   resource "gobootstrap" do
-    checksums = {
-      "darwin-arm64" => "f282d882c3353485e2fc6c634606d85caf36e855167d59b996dbeae19fa7629a",
-      "darwin-amd64" => "6cc6549b06725220b342b740497ffd24e0ebdcef75781a77931ca199f46ad781",
-      "linux-arm64"  => "74d97be1cc3a474129590c67ebf748a96e72d9f3a2b6fef3ed3275de591d49b3",
-      "linux-amd64"  => "1fc94b57134d51669c72173ad5d49fd62afb0f1db9bf3f798fd98ee423f8d730",
-    }
-
     version "1.24.13"
 
     on_arm do
       on_macos do
         url "https://go.dev/dl/go#{version}.darwin-arm64.tar.gz"
-        sha256 checksums["darwin-arm64"]
+        sha256 "f282d882c3353485e2fc6c634606d85caf36e855167d59b996dbeae19fa7629a"
       end
       on_linux do
         url "https://go.dev/dl/go#{version}.linux-arm64.tar.gz"
-        sha256 checksums["linux-arm64"]
+        sha256 "74d97be1cc3a474129590c67ebf748a96e72d9f3a2b6fef3ed3275de591d49b3"
       end
     end
     on_intel do
       on_macos do
         url "https://go.dev/dl/go#{version}.darwin-amd64.tar.gz"
-        sha256 checksums["darwin-amd64"]
+        sha256 "6cc6549b06725220b342b740497ffd24e0ebdcef75781a77931ca199f46ad781"
       end
       on_linux do
         url "https://go.dev/dl/go#{version}.linux-amd64.tar.gz"
-        sha256 checksums["linux-amd64"]
+        sha256 "1fc94b57134d51669c72173ad5d49fd62afb0f1db9bf3f798fd98ee423f8d730"
       end
     end
   end
